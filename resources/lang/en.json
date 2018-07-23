@@ -1,0 +1,38 @@
+{
+  "ok": "Ok",
+  "close": "Cerrar",
+  "cancel": "Cancelar",
+  "error_alert_title": "Oops...",
+  "error_alert_text": "Seprodujo un error! Intente Nuevamente.",
+  "token_expired_alert_title": "Ha espirado la Session!",
+  "token_expired_alert_text": "Por Favor Loguearse Nuevamente para Continuar.",
+  "login": "Ingresar",
+  "register": "Registrarse",
+  "page_not_found": "Pagina no Encontrada",
+  "go_home": "Inicio",
+  "logout": "Salir",
+  "email": "Email",
+  "remember_me": "Recuerdame",
+  "password": "Password",
+  "forgot_password": "Olvido su password?",
+  "confirm_password": "Confirmar Password",
+  "name": "Nombre",
+  "toggle_navigation": "Cambiar Navegacion",
+  "home": "Home",
+  "you_are_logged_in": "Estas Logueado!",
+  "reset_password": "Reset Password",
+  "send_password_reset_link": "Enviar Correo para Cambio de Password",
+  "settings": "Configuracion",
+  "profile": "Cuenta",
+  "your_info": "Informacion Personal",
+  "info_updated": "Su informacion ha sido actualizada!",
+  "update": "Actualizar",
+  "your_password": "Password",
+  "password_updated": "Su password ha sido actualizado!",
+  "new_password": "Nuevo Password",
+  "password_length_hint": "Indicar almenos 8 Caracteres",
+  "nav_menu_title": "Menu"
+
+}
+
+
