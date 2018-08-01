@@ -3,8 +3,8 @@
     <v-toolbar-side-icon @click.stop="toggleDrawer" v-if="authenticated"></v-toolbar-side-icon>
     <v-toolbar-title>
       <router-link :to="{ name: 'welcome' }" class="white--text">
-       <!-- {{ appName }}-->
-       VUELTA A LA PATRIA
+        {{ $t('app_name') }}
+       <!--VUELTA A LA PATRIA-->
       </router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>

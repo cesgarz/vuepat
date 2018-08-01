@@ -60,12 +60,14 @@
                 required
                 class="margin"
                 ></v-text-field>
+
                 <v-date-picker 
                 v-model="form.fe_nacimiento" locale="es" 
                 :max="new Date().toISOString().substr(0, 10)" 
                 min="1950-01-01">
                 </v-date-picker>
             </v-menu>
+            
           </v-flex>
 
         <v-flex sm5>
@@ -176,7 +178,6 @@ export default {
                 cedula: null,
                 sexo: null,
                 fe_nacimiento: null,
-                apellidos: null,
                 apellidos: null,
             },
             row: 0, 

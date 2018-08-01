@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 offset-sm2 lg4 offset-lg4>
       <v-card>
         <progress-bar :show="busy"></progress-bar>
-        <form @submit.prevent="login" @keydown="form.onKeydown($event)">
+        <form @submit.prevent="onSubmit" @keydown="form.onKeydown($event)">
           <v-card-title primary-title>
             <h3 class="headline mb-0">{{ $t('login') }}</h3>
           </v-card-title>
@@ -50,6 +50,18 @@
               {{ $t('forgot_password') }}
             </router-link>
           </v-card-actions>
+
+          <br/>
+
+          <vue-recaptcha
+            ref="invisibleRecaptcha"
+            @verify="onVerify"
+            @expired="onExpired"
+            size="invisible"
+            badge="inline"
+            :sitekey="sitekey">
+            </vue-recaptcha>
+
         </form>
       </v-card>
     </v-flex>
@@ -58,6 +70,8 @@
 
 <script>
 import Form from 'vform'
+import VueRecaptcha from 'vue-recaptcha'
+import axios from 'axios'
 
 export default {
   name: 'login-view',
@@ -71,10 +85,12 @@ export default {
     }),
     eye: true,
     remember: false,
-    busy: false
+    busy: false,
+    sitekey: '6LemDGcUAAAAADEoASQn1k4ZSff8gfnBM8bJy0Wd'
   }),
 
   methods: {
+
     async login () {
       if (await this.formHasErrors()) return
       this.busy = true
@@ -94,7 +110,41 @@ export default {
 
       // Redirect home.
       this.$router.push({ name: 'home' })
+    },
+
+    onSubmit: function () {
+      this.$refs.invisibleRecaptcha.execute()
+    },
+
+    onVerify: function (responseFront) {
+      var self = this
+
+      axios.post('../api/recaptcha', {
+        token: responseFront
+      })
+      .then(function (responseBack) {
+        if ( responseBack.data.success ) { 
+          self.login()
+        } 
+        else { 
+          this.resetRecaptcha() 
+        }
+      })
+      .catch(function (error) {
+        this.resetRecaptcha()
+      });
+    },
+
+    onExpired: function () {
+      this.resetRecaptcha()
+    },
+
+    resetRecaptcha () {
+      this.$refs.recaptcha.reset() // Direct call reset method
     }
-  }
+
+  },
+
+  components: { VueRecaptcha }
 }
 </script>

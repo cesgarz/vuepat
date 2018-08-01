@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field
-      :append-icon-cb="toggleVisibility"
+      @click:append="toggleVisibility"
       :append-icon="icon"
       :class="errorClass"
       :counter="counter"
@@ -80,3 +80,20 @@ export default {
   }
 }
 </script>
+<!--
+
+  <v-text-field
+      :append-icon-cb="toggleVisibility"
+      :append-icon="icon"
+      :class="errorClass"
+      :counter="counter"
+      :error-messages="errorMessages"
+      :hint="hint"
+      :label="label"
+      :name="name"
+      :prepend-icon="prepend"
+      :type="_eye ? 'password' : 'text'"
+      v-model="_value"
+    ></v-text-field>
+
+    -->
