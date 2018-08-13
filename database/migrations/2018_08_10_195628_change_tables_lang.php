@@ -19,6 +19,8 @@ class ChangeTablesLang extends Migration
             $table->renameColumn('name', 'nombre');
             $table->renameColumn('email', 'correo');
             $table->renameColumn('password', 'contraseña');
+            $table->renameColumn('created_at', 'creado_en');
+            $table->renameColumn('updated_at', 'actualizado_en');
         });
 
         //password_reset cambios_contraseña
@@ -40,6 +42,13 @@ class ChangeTablesLang extends Migration
             $table->increments('id');
             $table->integer('usuario_id');
             $table->integer('rol_id');
+            $table->timestamps();
+        });
+
+        //renombrar timestamps roles_usuario
+        Schema::table('roles_usuario', function (Blueprint $table) {
+            $table->renameColumn('created_at', 'creado_en');
+            $table->renameColumn('updated_at', 'actualizado_en');
         });
 
     }

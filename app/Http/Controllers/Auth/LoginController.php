@@ -69,4 +69,12 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
     }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'correo' => 'required|email|max:255',
+            'contraseña' => 'required|min:6',
+        ]);
+    }
 }

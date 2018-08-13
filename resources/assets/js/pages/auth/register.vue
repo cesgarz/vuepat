@@ -14,7 +14,7 @@
               :form="form"
               :label="$t('name')"
               :v-errors="errors"
-              :value.sync="form.name"
+              :value.sync="form.nombre"
               counter="30"
               name="name"
               v-validate="'required|max:30'"
@@ -25,7 +25,7 @@
               :form="form"
               :label="$t('email')"
               :v-errors="errors"
-              :value.sync="form.email"
+              :value.sync="form.correo"
               name="email"
               v-validate="'required|email'"
             ></email-input>
@@ -35,7 +35,7 @@
               :form="form"
               :hint="$t('password_length_hint')"
               :v-errors="errors"
-              :value.sync="form.password"
+              :value.sync="form.contraseña"
               v-on:eye="eye = $event"
               v-validate="'required|min:8'"
             ></password-input>
@@ -46,7 +46,7 @@
               :hide="eye"
               :label="$t('confirm_password')"
               :v-errors="errors"
-              :value.sync="form.password_confirmation"
+              :value.sync="form.contraseña_confirmation"
               data-vv-as="password"
               hide-icon="true"
               name="password_confirmation"
@@ -90,10 +90,10 @@ export default {
 
   data: () => ({
     form: new Form({
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
+      nombre: '',
+      correo: '',
+      contraseña: '',
+      contraseña_confirmation: ''
     }),
     eye: true,
     sitekey: '6LemDGcUAAAAADEoASQn1k4ZSff8gfnBM8bJy0Wd'

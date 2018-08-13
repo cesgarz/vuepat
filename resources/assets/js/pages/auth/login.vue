@@ -14,7 +14,7 @@
               :form="form"
               :label="$t('email')"
               :v-errors="errors"
-              :value.sync="form.email"
+              :value.sync="form.correo"
               name="email"
               prepend="person_outline"
               v-validate="'required|email'"
@@ -24,7 +24,7 @@
             <password-input
               :v-errors="errors"
               :form="form"
-              :value.sync="form.password"
+              :value.sync="form.contraseña"
               prepend="lock_outline"
               v-validate="'required|min:8'"
             ></password-input>
@@ -80,8 +80,8 @@ export default {
   },
   data: () => ({
     form: new Form({
-      email: '',
-      password: ''
+      correo: '',
+      conraseña: ''
     }),
     eye: true,
     remember: false,
