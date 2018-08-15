@@ -28,17 +28,20 @@ class CaptchaController extends Controller
     public function checkToken(Request $request)
     {
 
-        $token = $request->input('token');
-        $secret = env("GOOGLE_CAPTCHA_SECRET", "");
+        $token    = $request->input('token');
+        $secret   = env("GOOGLE_CAPTCHA_SECRET", "");
         $remoteip = "";
+        $url      = "https://www.google.com/recaptcha/api/siteverify";
 
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
-        'form_params' => [
-            'secret' => $secret,
+        $client   = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url , [
+        
+        'form_params'  => [
+            'secret'   => $secret,
             'response' => $token,
             'remoteip' => $remoteip
             ]
+            
         ]);
 
         $response = $response->getBody()->getContents();

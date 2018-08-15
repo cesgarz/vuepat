@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class ChangeTablesLang extends Migration
 {
+
+
     /**
      * Run the migrations.
      *
@@ -13,9 +15,11 @@ class ChangeTablesLang extends Migration
      */
     public function up()
     {
+
+        
         //users a usuarios
-        Schema::rename('users', 'usuarios');
-        Schema::table('usuarios', function (Blueprint $table) {
+        Schema::rename('users', 'usuario');
+        Schema::table('usuario', function (Blueprint $table) {
             $table->renameColumn('name', 'nombre');
             $table->renameColumn('email', 'correo');
             $table->renameColumn('password', 'contraseña');
@@ -24,21 +28,21 @@ class ChangeTablesLang extends Migration
         });
 
         //password_reset cambios_contraseña
-        Schema::rename('password_resets', 'cambios_contraseña');
+        Schema::rename('password_resets', 'cambio_contraseña');
         Schema::table('cambios_contraseña', function (Blueprint $table) {
             $table->renameColumn('email', 'correo');
             $table->renameColumn('created_at', 'creado_en');
         });
 
         //crear tabla roles
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('rol', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion');
             $table->boolean('activo');
         });
 
         //crear tabla roles_usuario
-        Schema::create('roles_usuario', function (Blueprint $table) {
+        Schema::create('rol_usuario', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('usuario_id');
             $table->integer('rol_id');
@@ -46,7 +50,7 @@ class ChangeTablesLang extends Migration
         });
 
         //renombrar timestamps roles_usuario
-        Schema::table('roles_usuario', function (Blueprint $table) {
+        Schema::table('rol_usuario', function (Blueprint $table) {
             $table->renameColumn('created_at', 'creado_en');
             $table->renameColumn('updated_at', 'actualizado_en');
         });
@@ -81,4 +85,6 @@ class ChangeTablesLang extends Migration
         //drop table roles_usuario
         Schema::dropIfExists('roles_usuario');
     }
+
+    
 }
