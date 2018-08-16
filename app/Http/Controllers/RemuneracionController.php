@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recursos;
+use App\Models\Remuneracion;
 use Illuminate\Http\Request;
 
-class RecursosController extends Controller
+class RemuneracionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RecursosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Recursos  $recursos
+     * @param  \App\Models\Remuneracion  $remuneracion
      * @return \Illuminate\Http\Response
      */
-    public function show(Recursos $recursos)
+    public function show(Remuneracion $remuneracion)
     {
         //
     }
@@ -52,10 +52,10 @@ class RecursosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Recursos  $recursos
+     * @param  \App\Models\Remuneracion  $remuneracion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Recursos $recursos)
+    public function edit(Remuneracion $remuneracion)
     {
         //
     }
@@ -64,10 +64,10 @@ class RecursosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recursos  $recursos
+     * @param  \App\Models\Remuneracion  $remuneracion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recursos $recursos)
+    public function update(Request $request, Remuneracion $remuneracion)
     {
         //
     }
@@ -75,10 +75,10 @@ class RecursosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recursos  $recursos
+     * @param  \App\Models\Remuneracion  $remuneracion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recursos $recursos)
+    public function destroy(Remuneracion $remuneracion)
     {
         //
     }

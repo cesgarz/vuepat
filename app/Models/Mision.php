@@ -4,33 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Estudio extends Model
+class Mision extends Model
 {
-    protected $table 	  = 'estudio';
-	protected $primaryKey = 'id_estudio';
+    protected $table 	  = 'mision';
+	protected $primaryKey = 'id_mision';
 	
 	const 	  CREATED_AT  = 'fe_creado';
 	const 	  UPDATED_AT  = 'fe_actualizado';
 
     protected $fillable   = [
-                            'id_persona',
-                            'id_nivel_estudio',
+                            'nb_mision',
                             'tx_observaciones',
                             'id_status',
                             'id_usuario'
                             ]; 
     
-    protected $hidden     = ['id_estudio','fe_creado','fe_actualizado'];
-
-    public function persona()
-    {
-    	return $this->BelongsTo('App\Models\Persona', 'id_persona');
-    }
-
-    public function nivelEstudio()
-    {
-    	return $this->BelongsTo('App\Models\NivelEstudio', 'id_nivel_estudio');
-    }
+    protected $hidden     = ['id_mision','fe_creado','fe_actualizado'];
 
     public function status()
     {

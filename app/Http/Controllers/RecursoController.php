@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recuperacion;
+use App\Models\Recurso;
 use Illuminate\Http\Request;
 
-class RecuperacionController extends Controller
+class RecursoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RecuperacionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Recuperacion  $recuperacion
+     * @param  \App\Models\Recurso  $recurso
      * @return \Illuminate\Http\Response
      */
-    public function show(Recuperacion $recuperacion)
+    public function show(Recurso $recurso)
     {
         //
     }
@@ -52,10 +52,10 @@ class RecuperacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Recuperacion  $recuperacion
+     * @param  \App\Models\Recurso  $recurso
      * @return \Illuminate\Http\Response
      */
-    public function edit(Recuperacion $recuperacion)
+    public function edit(Recurso $recurso)
     {
         //
     }
@@ -64,10 +64,10 @@ class RecuperacionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recuperacion  $recuperacion
+     * @param  \App\Models\Recurso  $recurso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recuperacion $recuperacion)
+    public function update(Request $request, Recurso $recurso)
     {
         //
     }
@@ -75,10 +75,10 @@ class RecuperacionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recuperacion  $recuperacion
+     * @param  \App\Models\Recurso  $recurso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recuperacion $recuperacion)
+    public function destroy(Recurso $recurso)
     {
         //
     }

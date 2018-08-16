@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\Recursos::class, function (Faker $faker) {
+$factory->define(App\Models\RolMenu::class, function (Faker $faker) {
     return [
         //
     ];

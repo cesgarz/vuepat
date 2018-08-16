@@ -19,20 +19,18 @@ class Usuario extends Authenticatable implements JWTSubject
     
     const     CREATED_AT  = 'fe_creado';
     const     UPDATED_AT  = 'fe_actualizado';
+
     protected $fillable   = [
-                            'usuario',
-                            'password',
-                            'nu_cedula',
-                            'nb_nombre',
-                            'nb_apellido',
-                            'remember_token',
+                            'nb_usuario',
+                            'tx_password',
+                            'tx_email',
+                            'tx_token',
                             'tx_observaciones',
                             'id_status',
-                            'fe_creado',
-                            'fe_actualizado'
+                            'id_usuario_e',
                             ]; 
     
-    protected $hidden     = ['remember_token','password','fe_creado','fe_actualizado'];
+    protected $hidden     = ['tx_token','tx_password','fe_creado','fe_actualizado' ];
 
 
     /**

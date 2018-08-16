@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ModelsEstadoCivil;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
-class ModelsEstadoCivilController extends Controller
+class StatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ModelsEstadoCivilController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ModelsEstadoCivil  $modelsEstadoCivil
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(ModelsEstadoCivil $modelsEstadoCivil)
+    public function show(Status $status)
     {
         //
     }
@@ -52,10 +52,10 @@ class ModelsEstadoCivilController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ModelsEstadoCivil  $modelsEstadoCivil
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsEstadoCivil $modelsEstadoCivil)
+    public function edit(Status $status)
     {
         //
     }
@@ -64,10 +64,10 @@ class ModelsEstadoCivilController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ModelsEstadoCivil  $modelsEstadoCivil
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ModelsEstadoCivil $modelsEstadoCivil)
+    public function update(Request $request, Status $status)
     {
         //
     }
@@ -75,10 +75,10 @@ class ModelsEstadoCivilController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ModelsEstadoCivil  $modelsEstadoCivil
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ModelsEstadoCivil $modelsEstadoCivil)
+    public function destroy(Status $status)
     {
         //
     }

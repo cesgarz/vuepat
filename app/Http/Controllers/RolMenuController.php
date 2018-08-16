@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ModelsUsuario;
+use App\Models\RolMenu;
 use Illuminate\Http\Request;
 
-class ModelsUsuarioController extends Controller
+class RolMenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ModelsUsuarioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ModelsUsuario  $modelsUsuario
+     * @param  \App\Models\RolMenu  $rolMenu
      * @return \Illuminate\Http\Response
      */
-    public function show(ModelsUsuario $modelsUsuario)
+    public function show(RolMenu $rolMenu)
     {
         //
     }
@@ -52,10 +52,10 @@ class ModelsUsuarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ModelsUsuario  $modelsUsuario
+     * @param  \App\Models\RolMenu  $rolMenu
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsUsuario $modelsUsuario)
+    public function edit(RolMenu $rolMenu)
     {
         //
     }
@@ -64,10 +64,10 @@ class ModelsUsuarioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ModelsUsuario  $modelsUsuario
+     * @param  \App\Models\RolMenu  $rolMenu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ModelsUsuario $modelsUsuario)
+    public function update(Request $request, RolMenu $rolMenu)
     {
         //
     }
@@ -75,10 +75,10 @@ class ModelsUsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ModelsUsuario  $modelsUsuario
+     * @param  \App\Models\RolMenu  $rolMenu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ModelsUsuario $modelsUsuario)
+    public function destroy(RolMenu $rolMenu)
     {
         //
     }
