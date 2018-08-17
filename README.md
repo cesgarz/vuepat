@@ -1,21 +1,19 @@
-# Laravel-Vue SPA Starter
+# Laravel-Vue SPA VUEPAT
 
-> A Laravel-Vue SPA starter project template with Vuetify frontend. 
+> Proyecto VUEPAT SPA con Vuetify frontend. 
 
-Forked from https://github.com/cretueusebiu/laravel-vue-spa
+Proyecto base: https://github.com/cretueusebiu/laravel-vue-spa
 
-## Features
+## Novedades
 
 - Laravel 5.6 + Vue + Vue Router + Vuex
-- Frontend built with [Vuetify](https://github.com/vuetifyjs/vuetify) UI framework
-- Pages with custom layouts 
-- Examples for login, register and password reset
-- Client-side form validation with [VeeValidate](https://github.com/baianat/vee-validate)
-- Integration with [vform](https://github.com/cretueusebiu/vform)
-- Authentication with [JWT](https://github.com/tymondesigns/jwt-auth)
-- Webpack with [laravel-mix](https://github.com/JeffreyWay/laravel-mix)
+- Frontend con [Vuetify](https://github.com/vuetifyjs/vuetify) UI framework
+- Validacion de formularios en client-side con [VeeValidate](https://github.com/baianat/vee-validate)
+- Integracion con [vform](https://github.com/cretueusebiu/vform)
+- Autenticacion con [JWT](https://github.com/tymondesigns/jwt-auth)
+- Webpack con [laravel-mix](https://github.com/JeffreyWay/laravel-mix)
 
-## Installation
+## Instalacion
 
 - `git clone https://github.com/elcobvg/laravel-vuetify-spa.git`
 - `cd laravel-vue-spa`
@@ -23,13 +21,13 @@ Forked from https://github.com/cretueusebiu/laravel-vue-spa
 - `composer install`
 - `php artisan key:generate`
 - `php artisan jwt:secret`
-- Edit `.env` and set your database connection details
+- Editar `.env` y setear los parametros de la base de datos
 - `php artisan migrate`
 - `npm install` / `yarn`
 
-## Usage
+## Uso
 
-#### Development
+#### Desarrollo
 
 ```bash
 # build and watch
@@ -39,15 +37,8 @@ npm run watch
 npm run hot
 ```
 
-#### Production
+#### Produccion
 
 ```bash
 npm run production
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
