@@ -14,17 +14,9 @@ class CiudadController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $ciudades = Ciudad::with(['estado','status'])->get();
+        
+        return $ciudades;
     }
 
     /**
@@ -35,7 +27,16 @@ class CiudadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_ciudad'         => 'required',
+            'id_estado'         => 'required',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required',
+        ]);
+
+        $ciudad = Ciudad::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('ciudad') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class CiudadController extends Controller
      */
     public function show(Ciudad $ciudad)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Ciudad  $ciudad
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ciudad $ciudad)
-    {
-        //
+        return $ciudad;
     }
 
     /**
@@ -69,7 +59,16 @@ class CiudadController extends Controller
      */
     public function update(Request $request, Ciudad $ciudad)
     {
-        //
+        $validate = request()->validate([
+            'nb_ciudad'         => 'required',
+            'id_estado'         => 'required',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required',
+        ]);
+        
+        $ciudad = $ciudad->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('ciudad')];
     }
 
     /**
@@ -80,6 +79,8 @@ class CiudadController extends Controller
      */
     public function destroy(Ciudad $ciudad)
     {
-        //
+        $ciudad = $ciudad->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('ciudad')];
     }
 }
