@@ -14,17 +14,8 @@ class DiscapacidadController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $discapacidad = Discapacidad::with(['usuario', 'status'])->get();
+        return $discapacidad;
     }
 
     /**
@@ -35,7 +26,17 @@ class DiscapacidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_discapacidad'      => 'required|max:50',
+            'id_tipo_discapacidad' => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $discapacidad = Discapacidad::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('discapacidad') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class DiscapacidadController extends Controller
      */
     public function show(Discapacidad $discapacidad)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Discapacidad  $discapacidad
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Discapacidad $discapacidad)
-    {
-        //
+        return $discapacidad;
     }
 
     /**
@@ -69,7 +59,17 @@ class DiscapacidadController extends Controller
      */
     public function update(Request $request, Discapacidad $discapacidad)
     {
-        //
+        $validate = request()->validate([
+            'nb_discapacidad'      => 'required|max:50',
+            'id_tipo_discapacidad' => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $discapacidad = Discapacidad::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('discapacidad') ];
     }
 
     /**
@@ -80,6 +80,8 @@ class DiscapacidadController extends Controller
      */
     public function destroy(Discapacidad $discapacidad)
     {
-        //
+        $discapacidad = $discapacidad->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('discapacidad')];
     }
 }

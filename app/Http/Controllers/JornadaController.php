@@ -14,17 +14,8 @@ class JornadaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $jornada = Jornada::with(['usuario', 'status'])->get();
+        return $jornada;
     }
 
     /**
@@ -35,7 +26,16 @@ class JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_jornada'        => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $jornada = Jornada::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('jornada') ];
     }
 
     /**
@@ -46,18 +46,7 @@ class JornadaController extends Controller
      */
     public function show(Jornada $jornada)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Jornada  $jornada
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Jornada $jornada)
-    {
-        //
+        return $jornada;
     }
 
     /**
@@ -69,7 +58,16 @@ class JornadaController extends Controller
      */
     public function update(Request $request, Jornada $jornada)
     {
-        //
+        $validate = request()->validate([
+            'nb_jornada'        => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $jornada = Jornada::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('jornada') ];
     }
 
     /**
@@ -80,6 +78,8 @@ class JornadaController extends Controller
      */
     public function destroy(Jornada $jornada)
     {
-        //
+        $jornada = $jornada->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('jornada')];
     }
 }

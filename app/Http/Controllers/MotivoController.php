@@ -14,17 +14,8 @@ class MotivoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $motivo = Motivo::with(['usuario', 'status'])->get();
+        return $motivo;
     }
 
     /**
@@ -35,7 +26,16 @@ class MotivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_motivo'         => 'required|max:50',
+            'id_usuario'        => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_status'         => 'required'
+        ]);
+
+        $motivo = Motivo::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('motivo') ];
     }
 
     /**
@@ -46,18 +46,7 @@ class MotivoController extends Controller
      */
     public function show(Motivo $motivo)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Motivo  $motivo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Motivo $motivo)
-    {
-        //
+        return $motivo;
     }
 
     /**
@@ -69,7 +58,16 @@ class MotivoController extends Controller
      */
     public function update(Request $request, Motivo $motivo)
     {
-        //
+         $validate = request()->validate([
+            'nb_motivo'         => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $motivo = Motivo::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('motivo') ];
     }
 
     /**
@@ -80,6 +78,8 @@ class MotivoController extends Controller
      */
     public function destroy(Motivo $motivo)
     {
-        //
+        $motivo = $motivo->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('motivo')];
     }
 }

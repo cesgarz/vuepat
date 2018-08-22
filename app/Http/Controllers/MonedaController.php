@@ -14,17 +14,8 @@ class MonedaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $moneda = Moneda::with(['usuario', 'status'])->get();
+        return $moneda;
     }
 
     /**
@@ -35,7 +26,18 @@ class MonedaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_moneda'         => 'required|max:25',
+            'co_moneda'         => 'required|max:5',
+            'tx_signo'          => 'required|max:3',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $moneda = Moneda::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('moneda') ];
     }
 
     /**
@@ -46,18 +48,7 @@ class MonedaController extends Controller
      */
     public function show(Moneda $moneda)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Moneda  $moneda
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Moneda $moneda)
-    {
-        //
+        return $moneda;
     }
 
     /**
@@ -69,7 +60,18 @@ class MonedaController extends Controller
      */
     public function update(Request $request, Moneda $moneda)
     {
-        //
+        $validate = request()->validate([
+            'nb_moneda'         => 'required|max:25',
+            'co_moneda'         => 'required|max:5',
+            'tx_signo'          => 'required|max:3',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $moneda = Moneda::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('moneda') ];
     }
 
     /**
@@ -80,6 +82,8 @@ class MonedaController extends Controller
      */
     public function destroy(Moneda $moneda)
     {
-        //
+        $moneda = $moneda->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('moneda')];
     }
 }

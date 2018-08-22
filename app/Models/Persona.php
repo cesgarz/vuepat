@@ -28,6 +28,11 @@ class Persona extends Model
     
     protected $hidden     = ['id_persona','fe_creado','fe_actualizado'];
 
+    public function estadoCivil()
+    {
+        return $this->BelongsTo('App\Models\EstadoCivil', 'id_estado_civil');
+    }
+
     public function status()
     {
         return $this->BelongsTo('App\Models\Status', 'id_status');
@@ -38,8 +43,4 @@ class Persona extends Model
     	return $this->BelongsTo('App\Models\Auth\Usuario', 'id_usuario');
     }
 
-    public function estadoCivil()
-    {
-    	return $this->BelongsTo('App\Models\EstadoCivil', 'id_estado_civil');
-    }
 }

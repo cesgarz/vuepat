@@ -14,7 +14,7 @@ class CiudadController extends Controller
      */
     public function index()
     {
-        $ciudades = Ciudad::with(['estado','status'])->get();
+        $ciudades = Ciudad::with(['estado', 'usuario', 'status'])->get();
         
         return $ciudades;
     }
@@ -28,10 +28,11 @@ class CiudadController extends Controller
     public function store(Request $request)
     {
         $validate = request()->validate([
-            'nb_ciudad'         => 'required',
+            'nb_ciudad'         => 'required|max:50',
             'id_estado'         => 'required',
+            'tx_observaciones'  => 'max:100',
             'id_usuario'        => 'required',
-            'id_status'         => 'required',
+            'id_status'         => 'required'
         ]);
 
         $ciudad = Ciudad::create($request->all());
@@ -60,10 +61,11 @@ class CiudadController extends Controller
     public function update(Request $request, Ciudad $ciudad)
     {
         $validate = request()->validate([
-            'nb_ciudad'         => 'required',
+            'nb_ciudad'         => 'required|max:50',
             'id_estado'         => 'required',
+            'tx_observaciones'  => 'max:100',
             'id_usuario'        => 'required',
-            'id_status'         => 'required',
+            'id_status'         => 'required'
         ]);
         
         $ciudad = $ciudad->update($request->all());

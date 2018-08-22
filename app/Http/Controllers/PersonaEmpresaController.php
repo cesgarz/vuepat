@@ -14,17 +14,8 @@ class PersonaEmpresaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $personaEmpresa = PersonaEmpresa::with(['persona', 'usuario', 'status'])->get();
+        return $personaEmpresa;
     }
 
     /**
@@ -35,7 +26,17 @@ class PersonaEmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'tx_empresa'           => 'required|max:100',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $personaEmpresa = PersonaEmpresa::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('personaEmpresa') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class PersonaEmpresaController extends Controller
      */
     public function show(PersonaEmpresa $personaEmpresa)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PersonaEmpresa  $personaEmpresa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PersonaEmpresa $personaEmpresa)
-    {
-        //
+        return $personaEmpresa;
     }
 
     /**
@@ -69,7 +59,17 @@ class PersonaEmpresaController extends Controller
      */
     public function update(Request $request, PersonaEmpresa $personaEmpresa)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'tx_empresa'           => 'required|max:100',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $personaEmpresa = PersonaEmpresa::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('personaEmpresa') ];
     }
 
     /**
@@ -80,6 +80,8 @@ class PersonaEmpresaController extends Controller
      */
     public function destroy(PersonaEmpresa $personaEmpresa)
     {
-        //
+        $personaEmpresa = $personaEmpresa->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('personaEmpresa')];
     }
 }

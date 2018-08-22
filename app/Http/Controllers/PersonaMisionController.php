@@ -14,17 +14,8 @@ class PersonaMisionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $personaMision = PersonaMision::with(['persona', 'mision', 'usuario', 'status'])->get();
+        return $personaMision;
     }
 
     /**
@@ -35,7 +26,17 @@ class PersonaMisionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_mision'            => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $personaMision = PersonaMision::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('personaMision') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class PersonaMisionController extends Controller
      */
     public function show(PersonaMision $personaMision)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PersonaMision  $personaMision
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PersonaMision $personaMision)
-    {
-        //
+        return $personaMision;
     }
 
     /**
@@ -69,7 +59,17 @@ class PersonaMisionController extends Controller
      */
     public function update(Request $request, PersonaMision $personaMision)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_mision'            => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $personaMision = PersonaMision::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('personaMision') ];
     }
 
     /**
@@ -80,6 +80,8 @@ class PersonaMisionController extends Controller
      */
     public function destroy(PersonaMision $personaMision)
     {
-        //
+        $personaMision = $personaMision->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('personaMision')];
     }
 }

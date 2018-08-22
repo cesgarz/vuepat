@@ -14,17 +14,8 @@ class GrupoMigracionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $grupoMigracion = GrupoMigracion::with(['usuario', 'status'])->get();
+        return $grupoMigracion;
     }
 
     /**
@@ -35,7 +26,16 @@ class GrupoMigracionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_grupo_migracion'   => 'required|max:50',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $grupoMigracion = GrupoMigracion::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('grupoMigracion') ];
     }
 
     /**
@@ -46,18 +46,7 @@ class GrupoMigracionController extends Controller
      */
     public function show(GrupoMigracion $grupoMigracion)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GrupoMigracion  $grupoMigracion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(GrupoMigracion $grupoMigracion)
-    {
-        //
+        return $grupoMigracion;
     }
 
     /**
@@ -69,7 +58,16 @@ class GrupoMigracionController extends Controller
      */
     public function update(Request $request, GrupoMigracion $grupoMigracion)
     {
-        //
+         $validate = request()->validate([
+            'nb_grupo_migracion'   => 'required|max:50',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $grupoMigracion = GrupoMigracion::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('grupoMigracion') ];
     }
 
     /**
@@ -80,6 +78,8 @@ class GrupoMigracionController extends Controller
      */
     public function destroy(GrupoMigracion $grupoMigracion)
     {
-        //
+        $grupoMigracion = $grupoMigracion->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('grupoMigracion')];
     }
 }

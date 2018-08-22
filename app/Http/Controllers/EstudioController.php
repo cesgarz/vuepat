@@ -14,17 +14,8 @@ class EstudioController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $estudio = Estudio::with(['persona', 'nivelEstudio', 'usuario', 'status'])->get();
+        return $estudio;
     }
 
     /**
@@ -35,7 +26,17 @@ class EstudioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_nivel_estudio'     => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $estudio = Estudio::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('estudio') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class EstudioController extends Controller
      */
     public function show(Estudio $estudio)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Estudio  $estudio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Estudio $estudio)
-    {
-        //
+        return $estudio;
     }
 
     /**
@@ -69,7 +59,17 @@ class EstudioController extends Controller
      */
     public function update(Request $request, Estudio $estudio)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_nivel_estudio'     => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $estudio = Estudio::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('estudio') ];
     }
 
     /**
@@ -80,6 +80,8 @@ class EstudioController extends Controller
      */
     public function destroy(Estudio $estudio)
     {
-        //
+        $estudio = $estudio->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('estudio')];
     }
 }

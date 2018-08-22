@@ -14,17 +14,9 @@ class PersonaDiscapacidadController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $personaDiscapacidad = PersonaDiscapacidad::with([
+            'persona', 'discapacidad', 'usuario', 'status'])->get();
+        return $personaDiscapacidad;
     }
 
     /**
@@ -35,7 +27,17 @@ class PersonaDiscapacidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_discapacidad'      => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $personaDiscapacidad = PersonaDiscapacidad::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('personaDiscapacidad') ];
     }
 
     /**
@@ -46,18 +48,7 @@ class PersonaDiscapacidadController extends Controller
      */
     public function show(PersonaDiscapacidad $personaDiscapacidad)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PersonaDiscapacidad  $personaDiscapacidad
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PersonaDiscapacidad $personaDiscapacidad)
-    {
-        //
+        return $personaDiscapacidad;
     }
 
     /**
@@ -69,7 +60,17 @@ class PersonaDiscapacidadController extends Controller
      */
     public function update(Request $request, PersonaDiscapacidad $personaDiscapacidad)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_discapacidad'      => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $personaDiscapacidad = PersonaDiscapacidad::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('personaDiscapacidad') ];
     }
 
     /**
@@ -80,6 +81,8 @@ class PersonaDiscapacidadController extends Controller
      */
     public function destroy(PersonaDiscapacidad $personaDiscapacidad)
     {
-        //
+        $personaDiscapacidad = $personaDiscapacidad->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('personaDiscapacidad')];
     }
 }

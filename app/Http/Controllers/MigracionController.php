@@ -14,17 +14,8 @@ class MigracionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $migracion = Discapacidad::with(['persona', 'motivo', 'recurso', 'grupoMigracion', 'transporte', 'usuario', 'status'])->get();
+        return $migracion;
     }
 
     /**
@@ -35,7 +26,22 @@ class MigracionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_motivo'            => 'required',
+            'id_recurso'           => 'required',
+            'id_grupo_migracion'   => 'required',
+            'tx_grupo_migracion'   => 'required|max:50',
+            'id_transporte'        => 'required',
+            'fe_salida'            => 'required|date',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $migracion = Migracion::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('migracion') ];
     }
 
     /**
@@ -50,17 +56,6 @@ class MigracionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Migracion  $migracion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Migracion $migracion)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -69,7 +64,22 @@ class MigracionController extends Controller
      */
     public function update(Request $request, Migracion $migracion)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'           => 'required',
+            'id_motivo'            => 'required',
+            'id_recurso'           => 'required',
+            'id_grupo_migracion'   => 'required',
+            'tx_grupo_migracion'   => 'required|max:50',
+            'id_transporte'        => 'required',
+            'fe_salida'            => 'required|date',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $migracion = Migracion::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('migracion') ];
     }
 
     /**
@@ -80,6 +90,8 @@ class MigracionController extends Controller
      */
     public function destroy(Migracion $migracion)
     {
-        //
+         $migracion = $migracion->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('migracion')];
     }
 }

@@ -14,17 +14,8 @@ class EstadoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $estado = Discapacidad::with(['pais', 'usuario', 'status'])->get();
+        return $estado;
     }
 
     /**
@@ -35,7 +26,17 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_estado'            => 'required|max:50',
+            'id_pais'              => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $estado = Estado::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('estado') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class EstadoController extends Controller
      */
     public function show(Estado $estado)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Estado  $estado
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Estado $estado)
-    {
-        //
+        return $estado;
     }
 
     /**
@@ -69,7 +59,17 @@ class EstadoController extends Controller
      */
     public function update(Request $request, Estado $estado)
     {
-        //
+        $validate = request()->validate([
+            'nb_estado'            => 'required|max:50',
+            'id_pais'              => 'required',
+            'tx_observaciones'     => 'max:100',
+            'id_usuario'           => 'required',
+            'id_status'            => 'required'
+        ]);
+
+        $estado = Estado::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('estado') ];
     }
 
     /**
@@ -80,6 +80,8 @@ class EstadoController extends Controller
      */
     public function destroy(Estado $estado)
     {
-        //
+        $estado = $estado->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('estado')];
     }
 }

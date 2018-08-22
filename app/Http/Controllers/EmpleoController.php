@@ -14,17 +14,8 @@ class EmpleoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $empleo = Empleo::with(['persona', 'tipo_cargo', 'jornada', 'remuneracion', 'moneda', 'usuario', 'status'])->get();
+        return $empleo;
     }
 
     /**
@@ -35,7 +26,23 @@ class EmpleoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'        => 'required',
+            'tx_empresa'        => 'required|max:100',
+            'id_tipo_cargo'     => 'required',
+            'tx_cargo'          => 'required|max:100',
+            'id_jornada'        => 'required',
+            'id_remuneracion'   => 'required', 
+            'id_moneda'         => 'required',
+            'mo_remuneracion'   => 'required|numeric|min:2|max:15',
+            'tx_observaciones'  => 'max:100', 
+            'id_status'         => 'required',
+            'id_usuario'        => 'required'
+        ]);
+
+        $empleo = Empleo::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('empleo') ];
     }
 
     /**
@@ -46,18 +53,7 @@ class EmpleoController extends Controller
      */
     public function show(Empleo $empleo)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Empleo  $empleo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Empleo $empleo)
-    {
-        //
+        return $empleo
     }
 
     /**
@@ -69,7 +65,23 @@ class EmpleoController extends Controller
      */
     public function update(Request $request, Empleo $empleo)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'        => 'required',
+            'tx_empresa'        => 'required|max:100',
+            'id_tipo_cargo'     => 'required',
+            'tx_cargo'          => 'required|max:100',
+            'id_jornada'        => 'required',
+            'id_remuneracion'   => 'required', 
+            'id_moneda'         => 'required',
+            'mo_remuneracion'   => 'required|numeric|min:2|max:15', 
+            'tx_observaciones'  => 'max:100',
+            'id_status'         => 'required',
+            'id_usuario'        => 'required'
+        ]);
+
+        $empleo = Empleo::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('empleo') ];
     }
 
     /**
@@ -80,6 +92,8 @@ class EmpleoController extends Controller
      */
     public function destroy(Empleo $empleo)
     {
-        //
+        $empleo = $empleo->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('empleo')];empleo
     }
 }

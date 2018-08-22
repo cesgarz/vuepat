@@ -14,17 +14,8 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $persona = Persona::with(['estadoCivil', 'usuario', 'status'])->get();
+        return $persona;
     }
 
     /**
@@ -35,7 +26,23 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_nombre'         => 'required|max:50',
+            'nb_apellido'       => 'required|max:50',
+            'tx_cedula'         => 'required|max:10',
+            'tx_sexo'           => 'required|max:1',
+            'fe_nacimiento'     => 'required|date',
+            'id_estado_civil'   => 'required',
+            'tx_telefono'       => 'required|max:20',
+            'tx_celular'        => 'required|max:20',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $persona = Persona::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('persona') ];
     }
 
     /**
@@ -46,18 +53,7 @@ class PersonaController extends Controller
      */
     public function show(Persona $persona)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Persona  $persona
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Persona $persona)
-    {
-        //
+        return $persona;
     }
 
     /**
@@ -69,7 +65,23 @@ class PersonaController extends Controller
      */
     public function update(Request $request, Persona $persona)
     {
-        //
+        $validate = request()->validate([
+            'nb_nombre'         => 'required|max:50',
+            'nb_apellido'       => 'required|max:50',
+            'tx_cedula'         => 'required|max:10',
+            'tx_sexo'           => 'required|max:1',
+            'fe_nacimiento'     => 'required|date',
+            'id_estado_civil'   => 'required',
+            'tx_telefono'       => 'required|max:20',
+            'tx_celular'        => 'required|max:20',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $persona = Persona::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('persona') ];
     }
 
     /**
@@ -80,6 +92,8 @@ class PersonaController extends Controller
      */
     public function destroy(Persona $persona)
     {
-        //
+        $persona = $persona->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('persona')];
     }
 }

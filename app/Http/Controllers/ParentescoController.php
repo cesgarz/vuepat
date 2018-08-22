@@ -14,17 +14,8 @@ class ParentescoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $parentesco = Parentesco::with(['usuario', 'status'])->get();
+        return $parentesco;
     }
 
     /**
@@ -35,7 +26,16 @@ class ParentescoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_parentesco'      => 'required|max:20',
+            'tx_observaciones'   => 'max:100',
+            'id_usuario'         => 'required',
+            'id_status'          => 'required'
+        ]);
+
+        $parentesco = Parentesco::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('parentesco') ];
     }
 
     /**
@@ -46,18 +46,7 @@ class ParentescoController extends Controller
      */
     public function show(Parentesco $parentesco)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Parentesco  $parentesco
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Parentesco $parentesco)
-    {
-        //
+        return $parentesco;
     }
 
     /**
@@ -69,7 +58,16 @@ class ParentescoController extends Controller
      */
     public function update(Request $request, Parentesco $parentesco)
     {
-        //
+         $validate = request()->validate([
+            'nb_parentesco'      => 'required|max:20',
+            'tx_observaciones'   => 'max:100',
+            'id_usuario'         => 'required',
+            'id_status'          => 'required'
+        ]);
+
+        $parentesco = Parentesco::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('parentesco') ];
     }
 
     /**
@@ -80,6 +78,8 @@ class ParentescoController extends Controller
      */
     public function destroy(Parentesco $parentesco)
     {
-        //
+        $parentesco = $parentesco->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('parentesco')];
     }
 }

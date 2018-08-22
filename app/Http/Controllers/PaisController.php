@@ -14,17 +14,8 @@ class PaisController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $pais = Pais::with(['usuario', 'status'])->get();
+        return $pais;
     }
 
     /**
@@ -35,7 +26,16 @@ class PaisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_pais'           => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $pais = Pais::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('pais') ];
     }
 
     /**
@@ -46,18 +46,7 @@ class PaisController extends Controller
      */
     public function show(Pais $pais)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pais  $pais
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pais $pais)
-    {
-        //
+        return $pais;
     }
 
     /**
@@ -69,7 +58,16 @@ class PaisController extends Controller
      */
     public function update(Request $request, Pais $pais)
     {
-        //
+        $validate = request()->validate([
+            'nb_pais'           => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $pais = Pais::update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('pais') ];
     }
 
     /**
@@ -80,6 +78,8 @@ class PaisController extends Controller
      */
     public function destroy(Pais $pais)
     {
-        //
+        $pais = $pais->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('pais')];
     }
 }
