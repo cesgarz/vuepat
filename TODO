@@ -1,0 +1,45 @@
+- fix para loel paddin y margin de los campos (campos muy pegados)
+- Culminar Controladores
+- Incluir llamdoa BD para combos
+- Incluir WEBSERVICE saime
+- validacion y formateo de montos  y fechas 
+- menu  con paneles de expasion
+- (listo) autenticacion con usuario y contraseña (quitar correo y eliminar tabla user)
+- (listo)metodo completo de autenticacion (metodo emergenci pta trasera)
+- tablas maestras (crud)
+- activacion y desactivacion datos maestros (status); 
+- creacion y edicion de Usuarios 
+- roles de usuarios :
+   general (carga de encuesta y visualizacion de planilla unica)
+   administrador (vusualizar reportes y cambio de tablas maestras)
+- validar montos y fechas en PHP   
+- fin de session
+
+- documentacion:
+    manual de usuario
+    diagrama E-R
+    casos de uso base
+    manua api
+
+- reportes:
+  crear reporteador
+  generar las vistas de los reportes a visualizar
+  reporte excel
+
+
+ - pase a produccion 
+  npm run prod
+  Laravel
+  APP_DEBUG=false
+  APP_ENV=production
+  APP_URL=http://localhost
+
+  artisan auth:clear-resets 
+  artisan cache:clear
+  artisan config:clear
+
+  artisan route:cache
+  artisan view:cache 
+  artisan config:cache 
+
+  php artisan storage:link
