@@ -14,17 +14,9 @@ class TipoPersonaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $tiposPersona = TipoPersona::with(['usuario', 'status'])->get();
+        
+        return $tiposPersona;
     }
 
     /**
@@ -35,7 +27,16 @@ class TipoPersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_tipo_persona'   => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $tipoPersona = TipoPersona::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('tipoPersona') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class TipoPersonaController extends Controller
      */
     public function show(TipoPersona $tipoPersona)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TipoPersona  $tipoPersona
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoPersona $tipoPersona)
-    {
-        //
+        return $tipoPersona;
     }
 
     /**
@@ -69,7 +59,16 @@ class TipoPersonaController extends Controller
      */
     public function update(Request $request, TipoPersona $tipoPersona)
     {
-        //
+        $validate = request()->validate([
+            'nb_tipo_persona'   => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $tipoPersona = $tipoPersona->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('tipoPersona')];
     }
 
     /**
@@ -80,6 +79,8 @@ class TipoPersonaController extends Controller
      */
     public function destroy(TipoPersona $tipoPersona)
     {
-        //
+        $tipoPersona = $tipoPersona->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('tipoPersona')];
     }
 }

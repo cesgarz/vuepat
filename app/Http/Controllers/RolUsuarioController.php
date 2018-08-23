@@ -14,17 +14,9 @@ class RolUsuarioController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $rolesUsuario = RolUsuario::with(['rol', 'usuario', 'status'])->get();
+        
+        return $rolesUsuario;
     }
 
     /**
@@ -35,7 +27,17 @@ class RolUsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_usuario'        => 'required',              
+            'id_rol'            => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $rolUsuario = RolUsuario::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('rolUsuario') ];
     }
 
     /**
@@ -46,18 +48,7 @@ class RolUsuarioController extends Controller
      */
     public function show(RolUsuario $rolUsuario)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RolUsuario  $rolUsuario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RolUsuario $rolUsuario)
-    {
-        //
+        return $rolUsuario;
     }
 
     /**
@@ -69,7 +60,17 @@ class RolUsuarioController extends Controller
      */
     public function update(Request $request, RolUsuario $rolUsuario)
     {
-        //
+        $validate = request()->validate([
+            'id_usuario'        => 'required',              
+            'id_rol'            => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $rolUsuario = $rolUsuario->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('rolUsuario')];
     }
 
     /**
@@ -80,6 +81,8 @@ class RolUsuarioController extends Controller
      */
     public function destroy(RolUsuario $rolUsuario)
     {
-        //
+        $rolUsuario = $rolUsuario->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('rolUsuario')];
     }
 }

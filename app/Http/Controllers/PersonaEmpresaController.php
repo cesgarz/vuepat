@@ -67,7 +67,7 @@ class PersonaEmpresaController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $personaEmpresa = PersonaEmpresa::create($request->all());
+        $personaEmpresa = $personaEmpresa->create($request->all());
         
         return [ 'msj' => 'Registro Agregado Correctamente', compact('personaEmpresa') ];
     }

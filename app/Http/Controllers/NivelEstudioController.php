@@ -65,7 +65,7 @@ class NivelEstudioController extends Controller
             'id_status'             => 'required'
         ]);
 
-        $nivelEstudio = NivelEstudio::update($request->all());
+        $nivelEstudio = $nivelEstudio->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('nivelEstudio') ];
     }

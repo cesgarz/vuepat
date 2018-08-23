@@ -65,7 +65,7 @@ class ParentescoController extends Controller
             'id_status'          => 'required'
         ]);
 
-        $parentesco = Parentesco::update($request->all());
+        $parentesco = $parentesco->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('parentesco') ];
     }

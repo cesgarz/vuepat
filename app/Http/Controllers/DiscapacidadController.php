@@ -67,7 +67,7 @@ class DiscapacidadController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $discapacidad = Discapacidad::update($request->all());
+        $discapacidad = $discapacidad->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('discapacidad') ];
     }

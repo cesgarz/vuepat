@@ -65,7 +65,7 @@ class PaisController extends Controller
             'id_status'         => 'required'
         ]);
 
-        $pais = Pais::update($request->all());
+        $pais = $pais->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('pais') ];
     }

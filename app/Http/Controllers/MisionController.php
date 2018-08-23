@@ -65,7 +65,7 @@ class MisionController extends Controller
             'id_status'         => 'required'
         ]);
 
-        $mision = Mision::update($request->all());
+        $mision = $mision->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('mision') ];
     }

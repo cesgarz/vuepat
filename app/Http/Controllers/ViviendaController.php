@@ -14,17 +14,9 @@ class ViviendaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $vivienda = Vivienda::with(['persona', 'ubicacion', 'tipoVivienda', 'pais', 'estado', 'ciudad', 'usuario', 'status'])->get();
+        
+        return $vivienda;
     }
 
     /**
@@ -35,7 +27,24 @@ class ViviendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_persona'        => 'required',
+            'id_ubicacion'      => 'required',
+            'id_tipo_vivienda'  => 'required',
+            'id_pais'           => 'required',
+            'id_estado'         => 'required',
+            'id_ciudad'         => 'required',
+            'tx_calle'          => 'required|max:100',
+            'tx_casa'           => 'required|mas:100',
+            'nu_personas'       => 'required|numeric',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $vivienda = Vivienda::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('vivienda') ];
     }
 
     /**
@@ -46,18 +55,7 @@ class ViviendaController extends Controller
      */
     public function show(Vivienda $vivienda)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vivienda  $vivienda
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vivienda $vivienda)
-    {
-        //
+        return $vivienda;
     }
 
     /**
@@ -69,7 +67,24 @@ class ViviendaController extends Controller
      */
     public function update(Request $request, Vivienda $vivienda)
     {
-        //
+         $validate = request()->validate([
+            'id_persona'        => 'required',
+            'id_ubicacion'      => 'required',
+            'id_tipo_vivienda'  => 'required',
+            'id_pais'           => 'required',
+            'id_estado'         => 'required',
+            'id_ciudad'         => 'required',
+            'tx_calle'          => 'required|max:100',
+            'tx_casa'           => 'required|mas:100',
+            'nu_personas'       => 'required|numeric',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $ciudad = $ciudad->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('ciudad')];
     }
 
     /**
@@ -80,6 +95,8 @@ class ViviendaController extends Controller
      */
     public function destroy(Vivienda $vivienda)
     {
-        //
+        $vivienda = $vivienda->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('vivienda')];
     }
 }

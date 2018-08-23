@@ -14,17 +14,9 @@ class TransporteController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $transportes = Transporte::with(['usuario', 'status'])->get();
+        
+        return $transportes;
     }
 
     /**
@@ -35,7 +27,16 @@ class TransporteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_transporte'     => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $transporte = Transporte::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('transporte') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class TransporteController extends Controller
      */
     public function show(Transporte $transporte)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Transporte  $transporte
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Transporte $transporte)
-    {
-        //
+        return $transporte;
     }
 
     /**
@@ -69,7 +59,16 @@ class TransporteController extends Controller
      */
     public function update(Request $request, Transporte $transporte)
     {
-        //
+        $validate = request()->validate([
+            'nb_transporte'     => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $transporte = $transporte->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('transporte')];
     }
 
     /**
@@ -80,6 +79,8 @@ class TransporteController extends Controller
      */
     public function destroy(Transporte $transporte)
     {
-        //
+        $transporte = $transporte->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('transporte')];
     }
 }

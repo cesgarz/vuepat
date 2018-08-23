@@ -65,7 +65,7 @@ class EstadoCivilController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $estadoCivil = EstadoCivil::update($request->all());
+        $estadoCivil = $estadoCivil->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('estadoCivil') ];
     }

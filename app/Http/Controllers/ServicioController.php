@@ -14,17 +14,9 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $servicios = Servicio::with(['usuario', 'status'])->get();
+        
+        return $servicios;
     }
 
     /**
@@ -35,7 +27,17 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_servicio'       => 'required|max:50',
+            'id_estado'         => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $servicio = Servicio::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('servicio') ];
     }
 
     /**
@@ -46,18 +48,7 @@ class ServicioController extends Controller
      */
     public function show(Servicio $servicio)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Servicio  $servicio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Servicio $servicio)
-    {
-        //
+        return $servicio;
     }
 
     /**
@@ -69,7 +60,17 @@ class ServicioController extends Controller
      */
     public function update(Request $request, Servicio $servicio)
     {
-        //
+        $validate = request()->validate([
+            'nb_servicio'       => 'required|max:50',
+            'id_estado'         => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $servicio = $servicio->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('servicio')];
     }
 
     /**
@@ -80,6 +81,8 @@ class ServicioController extends Controller
      */
     public function destroy(Servicio $servicio)
     {
-        //
+        $servicio = $servicio->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('servicio')];
     }
 }

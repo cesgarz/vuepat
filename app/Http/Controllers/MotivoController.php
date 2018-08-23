@@ -65,7 +65,7 @@ class MotivoController extends Controller
             'id_status'         => 'required'
         ]);
 
-        $motivo = Motivo::update($request->all());
+        $motivo = $motivo->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('motivo') ];
     }

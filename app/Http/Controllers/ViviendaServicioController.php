@@ -14,17 +14,9 @@ class ViviendaServicioController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $viviendasServicio = ViviendaServicio::with(['usuario', 'status'])->get();
+        
+        return $viviendasServicio;
     }
 
     /**
@@ -35,7 +27,17 @@ class ViviendaServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'id_vivienda'       => 'required',
+            'id_servicio'       => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $viviendaServicio = ViviendaServicio::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('viviendaServicio') ];
     }
 
     /**
@@ -46,18 +48,7 @@ class ViviendaServicioController extends Controller
      */
     public function show(ViviendaServicio $viviendaServicio)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ViviendaServicio  $viviendaServicio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ViviendaServicio $viviendaServicio)
-    {
-        //
+        return $viviendaServicio;
     }
 
     /**
@@ -69,7 +60,17 @@ class ViviendaServicioController extends Controller
      */
     public function update(Request $request, ViviendaServicio $viviendaServicio)
     {
-        //
+        $validate = request()->validate([
+            'id_vivienda'       => 'required',
+            'id_servicio'       => 'required',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $viviendaServicio = $viviendaServicio->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('viviendaServicio')];
     }
 
     /**
@@ -80,6 +81,8 @@ class ViviendaServicioController extends Controller
      */
     public function destroy(ViviendaServicio $viviendaServicio)
     {
-        //
+        $viviendaServicio = $viviendaServicio->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('viviendaServicio')];
     }
 }

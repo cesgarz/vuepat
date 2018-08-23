@@ -79,7 +79,7 @@ class EmpleoController extends Controller
             'id_usuario'        => 'required'
         ]);
 
-        $empleo = Empleo::update($request->all());
+        $empleo = $empleo->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('empleo') ];
     }

@@ -69,7 +69,7 @@ class MonedaController extends Controller
             'id_status'         => 'required'
         ]);
 
-        $moneda = Moneda::update($request->all());
+        $moneda = $moneda->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('moneda') ];
     }

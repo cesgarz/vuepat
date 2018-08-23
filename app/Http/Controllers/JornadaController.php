@@ -65,7 +65,7 @@ class JornadaController extends Controller
             'id_status'         => 'required'
         ]);
 
-        $jornada = Jornada::update($request->all());
+        $jornada = $jornada->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('jornada') ];
     }

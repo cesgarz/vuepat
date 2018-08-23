@@ -67,7 +67,7 @@ class EstudioController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $estudio = Estudio::update($request->all());
+        $estudio = $estudio->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('estudio') ];
     }

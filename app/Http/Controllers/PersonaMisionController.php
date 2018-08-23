@@ -67,7 +67,7 @@ class PersonaMisionController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $personaMision = PersonaMision::update($request->all());
+        $personaMision = $personaMision->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('personaMision') ];
     }

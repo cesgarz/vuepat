@@ -77,7 +77,7 @@ class MigracionController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $migracion = Migracion::update($request->all());
+        $migracion = $migracion->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('migracion') ];
     }

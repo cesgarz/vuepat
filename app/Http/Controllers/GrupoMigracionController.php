@@ -65,7 +65,7 @@ class GrupoMigracionController extends Controller
             'id_status'            => 'required'
         ]);
 
-        $grupoMigracion = GrupoMigracion::update($request->all());
+        $grupoMigracion = $grupoMigracion->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('grupoMigracion') ];
     }

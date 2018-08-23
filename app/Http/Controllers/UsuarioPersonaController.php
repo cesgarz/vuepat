@@ -14,17 +14,9 @@ class UsuarioPersonaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $usuariosPersona = UsuarioPersona::with(['usuario', 'status'])->get();
+        
+        return $usuariosPersona;
     }
 
     /**
@@ -35,7 +27,17 @@ class UsuarioPersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validate = request()->validate([
+            'id_usuario'         => 'required',
+            'id_persona'         => 'required',
+            'tx_observaciones'   => 'max:100',
+            'id_usuario'         => 'required',
+            'id_status'          => 'required'
+        ]);
+
+        $usuarioPersona = UsuarioPersona::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('usuarioPersona') ];
     }
 
     /**
@@ -46,18 +48,7 @@ class UsuarioPersonaController extends Controller
      */
     public function show(UsuarioPersona $usuarioPersona)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UsuarioPersona  $usuarioPersona
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UsuarioPersona $usuarioPersona)
-    {
-        //
+        return $usuarioPersona;
     }
 
     /**
@@ -69,7 +60,17 @@ class UsuarioPersonaController extends Controller
      */
     public function update(Request $request, UsuarioPersona $usuarioPersona)
     {
-        //
+        $validate = request()->validate([
+            'id_usuario'         => 'required',
+            'id_persona'         => 'required',
+            'tx_observaciones'   => 'max:100',
+            'id_usuario'         => 'required',
+            'id_status'          => 'required'
+        ]);
+        
+        $usuarioPersona = $usuarioPersona->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('usuarioPersona')];
     }
 
     /**
@@ -80,6 +81,8 @@ class UsuarioPersonaController extends Controller
      */
     public function destroy(UsuarioPersona $usuarioPersona)
     {
-        //
+        $usuarioPersona = $usuarioPersona->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('usuarioPersona')];
     }
 }

@@ -14,17 +14,9 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $roles = Rol::with(['usuario', 'status'])->get();
+        
+        return $roles;
     }
 
     /**
@@ -35,7 +27,16 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_rol'            => 'required|max:20',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $rol = Rol::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('rol') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class RolController extends Controller
      */
     public function show(Rol $rol)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rol  $rol
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rol $rol)
-    {
-        //
+        return $rol;
     }
 
     /**
@@ -69,7 +59,16 @@ class RolController extends Controller
      */
     public function update(Request $request, Rol $rol)
     {
-        //
+        $validate = request()->validate([
+            'nb_rol'            => 'required|max:20',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $rol = $rol->update($request->all());
+        
+        return [ 'msj' => 'Registro Editado Correctamente', compact('rol') ];
     }
 
     /**
@@ -80,6 +79,8 @@ class RolController extends Controller
      */
     public function destroy(Rol $rol)
     {
-        //
+        $rol = $rol->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('rol')];
     }
 }

@@ -14,17 +14,9 @@ class SectorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+         $sectores = Sector::with(['usuario', 'status'])->get();
+        
+        return $sectores;
     }
 
     /**
@@ -35,7 +27,16 @@ class SectorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validate = request()->validate([
+            'nb_sector'         => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $sector = Sector::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('sector') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class SectorController extends Controller
      */
     public function show(Sector $sector)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sector $sector)
-    {
-        //
+        return $sector;
     }
 
     /**
@@ -69,7 +59,16 @@ class SectorController extends Controller
      */
     public function update(Request $request, Sector $sector)
     {
-        //
+        $validate = request()->validate([
+            'nb_sector'         => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+        
+        $sector = $sector->update($request->all());
+
+        return [ 'msj' => 'Registro Editado' , compact('sector')];
     }
 
     /**
@@ -80,6 +79,8 @@ class SectorController extends Controller
      */
     public function destroy(Sector $sector)
     {
-        //
+        $sector = $sector->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('sector')];
     }
 }

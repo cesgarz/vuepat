@@ -79,7 +79,7 @@ class PersonaController extends Controller
             'id_status'         => 'required'
         ]);
 
-        $persona = Persona::update($request->all());
+        $persona = $persona->update($request->all());
         
         return [ 'msj' => 'Registro Editado Correctamente', compact('persona') ];
     }

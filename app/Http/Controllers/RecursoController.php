@@ -14,17 +14,9 @@ class RecursoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $recurso = Recurso::with(['usuario', 'status'])->get();
+        
+        return $recurso;
     }
 
     /**
@@ -35,7 +27,16 @@ class RecursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = request()->validate([
+            'nb_recurso'        => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $recurso = Recurso::create($request->all());
+        
+        return [ 'msj' => 'Registro Agregado Correctamente', compact('recurso') ];
     }
 
     /**
@@ -46,18 +47,7 @@ class RecursoController extends Controller
      */
     public function show(Recurso $recurso)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Recurso  $recurso
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Recurso $recurso)
-    {
-        //
+        return $recurso;
     }
 
     /**
@@ -69,7 +59,16 @@ class RecursoController extends Controller
      */
     public function update(Request $request, Recurso $recurso)
     {
-        //
+        $validate = request()->validate([
+            'nb_recurso'        => 'required|max:50',
+            'tx_observaciones'  => 'max:100',
+            'id_usuario'        => 'required',
+            'id_status'         => 'required'
+        ]);
+
+        $recurso = $recurso->update($request->all());
+        
+        return [ 'msj' => 'Registro Eeditado Correctamente', compact('recurso') ];
     }
 
     /**
@@ -80,6 +79,8 @@ class RecursoController extends Controller
      */
     public function destroy(Recurso $recurso)
     {
-        //
+        $recurso = $recurso->delete();
+ 
+        return [ 'msj' => 'Registro Eliminado' , compact('recurso')];
     }
 }
