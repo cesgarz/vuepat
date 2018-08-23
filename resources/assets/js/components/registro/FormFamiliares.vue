@@ -1,26 +1,25 @@
 <template>
     <v-card>
     <v-card-text>
-    <v-layout wrap>
+    <v-layout row wrap>
 
-        <v-flex sm6>
-         <v-text-field
-          name="name"
-          label="Cedula / Pasaporte"
-          id="id"
-          v-model="form.cedula"
-          required
-          :rules="rules.rsequerido"
-        ></v-text-field>
+        <v-flex sm12>
+            <v-select
+            :items="['Hijo', 'Hija', 'Abuelo', 'Abuela', 'Tio', 'Tia', 'Sobrino', 'Sobrina', 'Otros']"
+            label="Parentesco"   
+            prepend-icon="group"         
+            required
+            ></v-select>
         </v-flex>
-        <v-flex sm8>
-        </v-flex>    
-          
         <v-flex sm6>
+        </v-flex>
+
+        <v-flex sm12>
          <v-text-field
           name="name"
-          label="Apellidos"
+          label="Cedula"
           id="id"
+          hint="SI no posee colocar la de algun padre"
         ></v-text-field>
         </v-flex>
 
@@ -32,16 +31,16 @@
         ></v-text-field>
         </v-flex>
 
-       
-
-        <v-flex sm2>
-        <v-radio-group v-model="row" row prepend-icon="wc">
-        <v-radio label="M" value="radio-1" ></v-radio>
-        <v-radio label="F" value="radio-2"></v-radio>
-        </v-radio-group>
+        <v-flex sm6>
+         <v-text-field
+          name="name"
+          label="Apellidos"
+          id="id"
+        ></v-text-field>
         </v-flex>
 
-        <v-flex xs12 sm5>
+
+        <v-flex xs12>
             <v-menu
                 ref="picker"
                 v-model="picker"
@@ -58,49 +57,24 @@
                 readonly
                 required
                 ></v-text-field>
-                <v-date-picker 
-                v-model="form.fe_nacimiento" locale="es" 
+                <v-date-picker v-model="form.fe_nacimiento" locale="es" 
                 :max="new Date().toISOString().substr(0, 10)" 
-                min="1950-01-01">
-                </v-date-picker>
+                min="1950-01-01"></v-date-picker>
             </v-menu>
           </v-flex>
 
-        <v-flex sm5>
-            <v-select
-            :items="['Soltero', 'Casado', 'Viudo', 'Divorciado' ]"
-            label="Estado Civil"
-            required
-            ></v-select>
+         <v-flex sm12>
+              <v-select
+              v-model="form.apellidos"
+              chips
+              deletable-chips
+              :items="['GMVV', 'CLAP', 'Hogares de la Patria', 'Bonos', '0800SALUD YA', 'Chamba Jubenil']"
+              label="Programa o mision recibido"
+              prepend-icon="star_border"
+              multiple
+              required
+              ></v-select>
         </v-flex>
-
-        <v-flex sm3>
-         <v-text-field
-          name="name"
-          label="Telefono"
-          id="id"
-          prepend-icon="phone"
-        ></v-text-field>
-        </v-flex>
-
-        <v-flex sm3>
-         <v-text-field
-          name="name"
-          label="Celular"
-          id="id"
-          prepend-icon="phone_android"
-        ></v-text-field>
-        </v-flex>
-
-        <v-flex sm6>
-        <v-text-field
-          name="name"
-          label="Correo Electronico"
-          id="id"
-          prepend-icon="email"
-        ></v-text-field>
-        </v-flex>
-
 
         <v-flex xs12 sm3>
           <v-checkbox
@@ -110,8 +84,9 @@
           ></v-checkbox>
         </v-flex>
 
+
         
-        <v-flex sm3 v-if="discapacidad">
+        <v-flex sm4 v-show="discapacidad">
               <v-select
               v-model="tipoDiscap"
               :items="['Físicas', 'Sensorial', 'Congnitivas', 'Otros']"
@@ -120,7 +95,7 @@
               ></v-select>
         </v-flex>
 
-        <v-flex sm3 v-if="tipoDiscap == 'Físicas'">
+        <v-flex sm4 v-if="tipoDiscap == 'Físicas'">
               <v-select
               :items="['Miembros  superiores', 'Miembros  inferiores']"
               label="Discapacidad Fisica"
@@ -128,7 +103,7 @@
               ></v-select>
         </v-flex>
 
-        <v-flex sm3 v-if="tipoDiscap == 'Sensorial'">
+        <v-flex sm4 v-if="tipoDiscap == 'Sensorial'">
               <v-select
               :items="['Auditiva', 'Visual']"
               label="Discapacidad Sensorial"
@@ -136,7 +111,7 @@
               ></v-select>
         </v-flex>
 
-        <v-flex sm3 v-if="tipoDiscap == 'Otros'">
+        <v-flex sm4 v-if="tipoDiscap == 'Otros'">
          <v-text-field
           name="name"
           label="Otros"
@@ -144,12 +119,10 @@
           id="id"
         ></v-text-field>
         </v-flex>
-  
 
     </v-layout>
     </v-card-text>
     </v-card>
-       
 </template>
 
 <script>
@@ -169,15 +142,7 @@ export default {
                 sexo: null,
                 fe_nacimiento: null,
                 apellidos: null,
-            },
-            rules:{
-                requerido: [
-                    v => {
-                           console.log(v);
-                           return 'error';
-
-                    }
-                ]
+                apellidos: null,
             },
             row: 0, 
             rules:{
@@ -194,9 +159,6 @@ export default {
                     }
                 }
             },
-             picker (val) {
-        val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
-      }
 }
 </script>
 

@@ -2,130 +2,63 @@
     <v-card>
     <v-card-text>
     <v-layout row wrap>
-          
-        <v-flex sm12>
-         <v-btn dark fab small color="success">
-            <v-icon>group_add</v-icon>
-        </v-btn>
-        </v-flex>
-        
-        <v-divider></v-divider>
-
-        <v-flex sm6>
-            <v-select
-            :items="['Hijo', 'Hija', 'Abuelo', 'Abuela', 'Tio', 'Tia', 'Sobrino', 'Sobrina', 'Otros']"
-            label="Parentesco"   
-            prepend-icon="group"         
-            required
-            ></v-select>
-        </v-flex>
-        <v-flex sm6>
-        </v-flex>
-
-        <v-flex sm4>
-         <v-text-field
-          name="name"
-          label="Cedula"
-          id="id"
-          hint="SI no posee colocar la de algun padre"
-        ></v-text-field>
-        </v-flex>
-
-        <v-flex sm4>
-         <v-text-field
-          name="name"
-          label="Nombres"
-          id="id"
-        ></v-text-field>
-        </v-flex>
-
-        <v-flex sm4>
-         <v-text-field
-          name="name"
-          label="Apellidos"
-          id="id"
-        ></v-text-field>
-        </v-flex>
 
 
-        <v-flex xs12 sm3>
-            <v-menu
-                ref="picker"
-                v-model="picker"
-                full-width
-                min-width="290px"
-                lazy
+        <v-toolbar dark class="primary">
+            <h3>Familiares</h3>
+                <v-spacer></v-spacer>
+                <v-btn fab @click="insItem" dark absolute right bottom class="success">
+                    <v-icon dark>group_add</v-icon>
+                </v-btn>
+            </v-toolbar>
+
+            <v-card-text>
+                
+            <v-flex xs12 xs6>
+            <v-text-field
+                v-model="buscar"
+                append-icon="search"
+                label="Buscar"
+                single-line
+                hide-details
+                clearable
+            ></v-text-field>
+            </v-flex>
+            
+            <v-data-table
+            :headers="headers"
+            :items  ="items"
+            :search ="buscar"
+            item-key="id_banco"
+            :loading="IsLoading"
+            rows-per-page-text="Res. x Pag"
+            disable-initial-sort
             >
-                <v-text-field
-                slot="activator"
-                v-model="form.fe_nacimiento"
-                :rules="rules.fecha"
-                label="Fecha de Nacimiento"
-                prepend-icon="event"
-                readonly
-                required
-                ></v-text-field>
-                <v-date-picker v-model="form.fe_nacimiento" locale="es" 
-                :max="new Date().toISOString().substr(0, 10)" 
-                min="1950-01-01"></v-date-picker>
-            </v-menu>
-          </v-flex>
 
-        <v-flex xs12 sm3>
-          <v-checkbox
-            label="Posee anguna Discapacidad?"
-            v-model="discapacidad"
-            prepend-icon="accessible"
-          ></v-checkbox>
-        </v-flex>
+            <template slot="items" slot-scope="item">
+                <td class="text-xs-left">{{ item.item.nombres    }}</td>
+                <td class="text-xs-left">{{ item.item.apellidos  }}</td>
+                <td class="text-xs-left">{{ item.item.cedula     }}</td>
+                <td class="text-xs-left">{{ item.item.parentesco }}</td>
 
-        
-        <v-flex sm3 v-show="discapacidad">
-              <v-select
-              v-model="tipoDiscap"
-              :items="['Físicas', 'Sensorial', 'Congnitivas', 'Otros']"
-              label="Tipo de Discapacidad"
-              required
-              ></v-select>
-        </v-flex>
+            </template>
 
-        <v-flex sm3 v-if="tipoDiscap == 'Físicas'">
-              <v-select
-              :items="['Miembros  superiores', 'Miembros  inferiores']"
-              label="Discapacidad Fisica"
-              required
-              ></v-select>
-        </v-flex>
+            <v-alert slot="no-results" :value="true" color="info" icon="info">
+                La busqueda "{{ buscar }}" Sin resultados
+            </v-alert>
 
-        <v-flex sm3 v-if="tipoDiscap == 'Sensorial'">
-              <v-select
-              :items="['Auditiva', 'Visual']"
-              label="Discapacidad Sensorial"
-              required
-              ></v-select>
-        </v-flex>
+            <template slot="pageText" slot-scope="item">
+                {{item.pageStart}} - {{item.pageStop}} de {{item.itemsLength}}
+            </template>
 
-        <v-flex sm3 v-if="tipoDiscap == 'Otros'">
-         <v-text-field
-          name="name"
-          label="Otros"
-          hint="indique discapacidad"
-          id="id"
-        ></v-text-field>
-        </v-flex>
+            </v-data-table>
 
-        <v-flex sm12>
-              <v-select
-              v-model="ww"
-              chips
-              deletable-chips
-              :items="['GMVV', 'CLAP', 'Hogares de la Patria', 'Bonos', '0800SALUD YA', 'Chamba Jubenil']"
-              label="Programa o mision recibido"
-              prepend-icon="star_border"
-              multiple
-              required
-              ></v-select>
-        </v-flex>
+
+            <form-container :nb-accion="nb_accion" :modal="modal" @cerrarModal="cerrarModal">
+                <form-familiares></form-familiares> 
+            </form-container>
+</v-card-text>
+      
 
     </v-layout>
     </v-card-text>
@@ -133,39 +66,52 @@
 </template>
 
 <script>
+import listHelper from '../../components/mixins/listHelper';
+import FormContainer from '../../components/registro/FormContainer.vue'
+import FormFamiliares from '../../components/registro/FormFamiliares.vue'
+
 export default {
+    mixins:[listHelper],
+    components: {
+    'form-container':       FormContainer,
+    'form-familiares':      FormFamiliares,
+    },
+    created()
+    {
+      this.list();
+    },
     name: 'datos-personales',
     data() 
     {
         return {
-            picker: 0,
-            checkbox: false,
-            discapacidad: false,
-            tipoDiscap: '',
-            form: {
-                apellidos: null,
-                nombres: null,
-                cedula: null,
-                sexo: null,
-                fe_nacimiento: null,
-                apellidos: null,
-                apellidos: null,
-            },
-            row: 0, 
-            rules:{
+            buscar: null,
 
-            }
+            IsLoading: false,
+            items: [],
+            headers: [
+            { text: 'Nombre',    value: 'nombres' },
+            { text: 'apellidos', value: 'apellidos' },
+            { text: 'Cedula',    value: 'cedula' },
+            { text: 'Parentesco',value: 'parentesco'  },
+            ]
         }
     },
-    watch:{
-                discapacidad(val)
-                {
-                   console.log(val)
-                   if(!val){
-                        this.tipoDiscap = null
-                    }
-                }
-            },
+    methods:
+    {
+        list () {
+            this.items = [  
+                            {nombres: 'Luisa', apellidos: 'Tovar', cedula:'16087829', parentesco:'esposa'  },
+                            {nombres: 'Jean',  apellidos: 'Pierre', cedula:'31297122', parentesco:'hijo'  }
+                        ];
+
+
+
+        },
+
+
+
+
+    }
 }
 </script>
 

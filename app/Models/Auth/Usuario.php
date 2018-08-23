@@ -1,19 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models\Auth;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
+//use Laravel\Passport\HasApiTokens;
 
 class Usuario extends Authenticatable implements JWTSubject
 {
+    use  Notifiable;
 
-    use HasApiTokens, Notifiable;
-
-
-    protected $guard      = 'users';
+    //protected $guard      = 'usuario';
     protected $table      = 'usuario';
     protected $primaryKey = 'id_usuario';
     

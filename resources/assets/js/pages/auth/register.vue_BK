@@ -3,18 +3,18 @@
     <v-flex xs12 sm8 offset-sm2 lg4 offset-lg4>
       <v-card>
         <progress-bar :show="form.busy"></progress-bar>
-        <form @submit.prevent="register" @keydown="form.onKeydown($event)">
+        <form @submit.prevent="onSubmit" @keydown="form.onKeydown($event)">
           <v-card-title primary-title>
             <h3 class="headline mb-0">{{ $t('register') }}</h3>
           </v-card-title>
           <v-card-text>
 
             <!-- Name -->
-            <text-input 
+            <text-input
               :form="form"
               :label="$t('name')"
               :v-errors="errors"
-              :value.sync="form.nb_usuario"
+              :value.sync="form.nombre"
               counter="30"
               name="name"
               v-validate="'required|max:30'"
@@ -25,7 +25,7 @@
               :form="form"
               :label="$t('email')"
               :v-errors="errors"
-              :value.sync="form.tx_email"
+              :value.sync="form.correo"
               name="email"
               v-validate="'required|email'"
             ></email-input>
@@ -35,7 +35,7 @@
               :form="form"
               :hint="$t('password_length_hint')"
               :v-errors="errors"
-              :value.sync="form.tx_password"
+              :value.sync="form.contraseña"
               v-on:eye="eye = $event"
               v-validate="'required|min:8'"
             ></password-input>
@@ -46,7 +46,7 @@
               :hide="eye"
               :label="$t('confirm_password')"
               :v-errors="errors"
-              :value.sync="form.password_confirmation"
+              :value.sync="form.contraseña_confirmation"
               data-vv-as="password"
               hide-icon="true"
               name="password_confirmation"
@@ -58,6 +58,18 @@
           <v-card-actions>
             <submit-button :form="form" :label="$t('register')"></submit-button>
           </v-card-actions>
+
+          <br/>
+
+         <vue-recaptcha
+          ref="invisibleRecaptcha"
+          @verify="onVerify"
+          @expired="onExpired"
+          size="invisible"
+          badge="inline"
+          :sitekey="sitekey">
+          </vue-recaptcha>
+
         </form>
       </v-card>
     </v-flex>
@@ -67,6 +79,8 @@
 
 <script>
 import Form from 'vform'
+import VueRecaptcha from 'vue-recaptcha'
+import axios from 'axios'
 
 export default {
   name: 'register-view',
@@ -76,16 +90,18 @@ export default {
 
   data: () => ({
     form: new Form({
-      nb_nombre: '',
-      tx_email: '',
-      tx_password: '',
-      password_confirmation: ''
+      nombre: '',
+      correo: '',
+      contraseña: '',
+      contraseña_confirmation: ''
     }),
-    eye: true
+    eye: true,
+    sitekey: '6LemDGcUAAAAADEoASQn1k4ZSff8gfnBM8bJy0Wd'
   }),
 
   methods: {
     async register () {
+  
       if (await this.formHasErrors()) return
 
       // Register the user.
@@ -102,7 +118,42 @@ export default {
 
       // Redirect home.
       this.$router.push({ name: 'home' })
+    },
+
+     onSubmit: function () {
+      this.$refs.invisibleRecaptcha.execute()
+    },
+
+    onVerify: function (responseFront) {
+
+      var self = this
+
+      axios.post('../api/recaptcha', {
+        token: responseFront
+      })
+      .then(function (responseBack) {
+        if ( responseBack.data.success ) { 
+          self.register()
+        } 
+        else { 
+          this.resetRecaptcha() 
+        }
+      })
+      .catch(function (error) {
+        this.resetRecaptcha()
+      });
+    },
+
+    onExpired: function () {
+      this.resetRecaptcha()
+    },
+
+    resetRecaptcha () {
+      this.$refs.recaptcha.reset() // Direct call reset method
     }
-  }
+
+  },
+
+  components: { VueRecaptcha }
 }
 </script>

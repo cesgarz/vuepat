@@ -34,12 +34,12 @@
     "eslint": "^3.19.0",
     "eslint-plugin-html": "^3.2.2",
     "eslint-plugin-vue-libs": "^1.2.1",
-    "laravel-mix": "^2.1",
+    "laravel-mix": "^2.1.14",
     "standard": "^10.0.3",
     "stylint": "^1.5.9",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "svg-sprite-loader": "^3.9.0",
+    "svg-sprite-loader": "^3.9.2",
     "vue-template-compiler": "^2.5.16",
     "webpack-bundle-analyzer": "^2.11.1"
   }

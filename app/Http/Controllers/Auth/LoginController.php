@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+    use AuthenticatesUsers,Authenticatable;
 
     /**
      * Create a new controller instance.
@@ -20,6 +21,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function username()
+    {
+        return 'tx_email';
+    }
     /**
      * Attempt to log the user into the application.
      *
@@ -28,7 +33,13 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $token = $this->guard()->attempt($this->credentials($request));
+        
+        $credentials = ['tx_email' => $request->tx_email , 'password' => $request->password];
+        //$token = $this->guard()->attempt($credentials);
+
+       dd( $this->getAuthIdentifier());
+        //dd(Auth::attempt($credentials),$credentials, bcrypt($request->password), Hash::check('12345678', '$2y$10$DhfWCTYtDTh18t.DEP4EMuZIqxOy3g0CYb4EQpFSvhUaB1XpcaqDW'));
+        //$token = $this->guard()->attempt($this->credentials($request));
 
         if ($token) {
             $this->guard()->setToken($token);
@@ -73,8 +84,8 @@ class LoginController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'correo' => 'required|email|max:255',
-            'contraseña' => 'required|min:6',
+            'tx_email' => 'required|email|max:255',
+            'tx_password' => 'required|min:6',
         ]);
     }
 }

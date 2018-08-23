@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 offset-sm2 lg4 offset-lg4>
       <v-card>
         <progress-bar :show="busy"></progress-bar>
-        <form @submit.prevent="login" @keydown="form.onKeydown($event)">
+        <form  @keydown="form.onKeydown($event)">
           <v-card-title primary-title>
             <h3 class="headline mb-0">{{ $t('login') }}</h3>
           </v-card-title>
@@ -14,7 +14,7 @@
               :form="form"
               :label="$t('email')"
               :v-errors="errors"
-              :value.sync="form.tx_email"
+              :value.sync="form.correo"
               name="email"
               prepend="person_outline"
               v-validate="'required|email'"
@@ -24,7 +24,7 @@
             <password-input
               :v-errors="errors"
               :form="form"
-              :value.sync="form.password"
+              :value.sync="form.contraseña"
               prepend="lock_outline"
               v-validate="'required|min:8'"
             ></password-input>
@@ -50,6 +50,19 @@
               {{ $t('forgot_password') }}
             </router-link>
           </v-card-actions>
+
+          <br/>
+<!--
+          <vue-recaptcha
+            ref="invisibleRecaptcha"
+            @verify="onVerify"
+            @expired="onExpired"
+            size="invisible"
+            badge="inline"
+            :sitekey="sitekey">
+            </vue-recaptcha> 
+            -->
+
         </form>
       </v-card>
     </v-flex>
@@ -58,6 +71,8 @@
 
 <script>
 import Form from 'vform'
+import VueRecaptcha from 'vue-recaptcha'
+import axios from 'axios'
 
 export default {
   name: 'login-view',
@@ -66,15 +81,17 @@ export default {
   },
   data: () => ({
     form: new Form({
-      tx_email: '',
-      password: ''
+      correo: '',
+      conraseña: ''
     }),
     eye: true,
     remember: false,
-    busy: false
+    busy: false,
+    sitekey: '6LemDGcUAAAAADEoASQn1k4ZSff8gfnBM8bJy0Wd'
   }),
 
   methods: {
+
     async login () {
       if (await this.formHasErrors()) return
       this.busy = true
@@ -93,8 +110,43 @@ export default {
       this.busy = false
 
       // Redirect home.
-      this.$router.push({ name: 'home' }) 
+      this.$router.push({ name: 'home' })
+    },
+
+   /* onSubmit: function () {
+      this.$refs.invisibleRecaptcha.execute()
+    },*/
+
+    onVerify: function (responseFront) {
+      var self = this
+
+      axios.post('../api/recaptcha', {
+        token: responseFront
+      })
+      .then(function (responseBack) {
+        if ( responseBack.data.success ) { 
+          self.login()
+        } 
+        else { 
+          self.resetRecaptcha() 
+        }
+      })
+      .catch(function (error) {
+        self.resetRecaptcha()
+
+      });
+    },
+
+    onExpired: function () {
+      this.resetRecaptcha()
+    },
+
+    resetRecaptcha () {
+      this.$refs.invisibleRecaptcha.reset() // Direct call reset method
     }
-  }
+
+  },
+
+  //components: { VueRecaptcha }
 }
 </script>
