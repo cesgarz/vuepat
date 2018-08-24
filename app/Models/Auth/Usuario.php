@@ -21,7 +21,7 @@ class Usuario extends Authenticatable implements JWTSubject
 
     protected $fillable   = [
                             'nb_usuario',
-                            'tx_password',
+                            'password',
                             'tx_email',
                             'tx_token',
                             'tx_observaciones',
@@ -29,7 +29,7 @@ class Usuario extends Authenticatable implements JWTSubject
                             'id_usuario_e',
                             ]; 
     
-    protected $hidden     = ['tx_token','tx_password','fe_creado','fe_actualizado' ];
+    protected $hidden     = ['tx_token','password','fe_creado','fe_actualizado' ];
 
 
     /**

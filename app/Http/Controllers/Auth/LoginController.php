@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers,Authenticatable;
+    use AuthenticatesUsers;
 
     /**
      * Create a new controller instance.
@@ -33,17 +33,11 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        
         $credentials = ['tx_email' => $request->tx_email , 'password' => $request->password];
-        //$token = $this->guard()->attempt($credentials);
-
-       dd( $this->getAuthIdentifier());
-        //dd(Auth::attempt($credentials),$credentials, bcrypt($request->password), Hash::check('12345678', '$2y$10$DhfWCTYtDTh18t.DEP4EMuZIqxOy3g0CYb4EQpFSvhUaB1XpcaqDW'));
-        //$token = $this->guard()->attempt($this->credentials($request));
+        $token = $this->guard()->attempt($credentials);
 
         if ($token) {
             $this->guard()->setToken($token);
-
             return true;
         }
 
