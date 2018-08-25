@@ -25,6 +25,7 @@ class LoginController extends Controller
     {
         return 'tx_email';
     }
+
     /**
      * Attempt to log the user into the application.
      *
@@ -33,7 +34,7 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $credentials = ['tx_email' => $request->tx_email , 'password' => $request->password];
+        $credentials = $request->only('tx_email', 'password');//['tx_email' => $request->tx_email , 'password' => $request->password];
         $token = $this->guard()->attempt($credentials);
 
         if ($token) {
@@ -79,7 +80,7 @@ class LoginController extends Controller
     {
         return Validator::make($data, [
             'tx_email' => 'required|email|max:255',
-            'tx_password' => 'required|min:6',
+            'password' => 'required|min:6',
         ]);
     }
 }

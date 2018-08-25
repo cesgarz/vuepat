@@ -35,7 +35,8 @@
               :form="form"
               :hint="$t('password_length_hint')"
               :v-errors="errors"
-              :value.sync="form.tx_password"
+              :value.sync="form.password"
+              name="password"
               v-on:eye="eye = $event"
               v-validate="'required|min:8'"
             ></password-input>
@@ -47,7 +48,7 @@
               :label="$t('confirm_password')"
               :v-errors="errors"
               :value.sync="form.password_confirmation"
-              data-vv-as="password"
+              data-vv-as="$t('confirm_password')"
               hide-icon="true"
               name="password_confirmation"
               v-validate="'required|confirmed:password'"
@@ -78,7 +79,7 @@ export default {
     form: new Form({
       nb_nombre: '',
       tx_email: '',
-      tx_password: '',
+      password: '',
       password_confirmation: ''
     }),
     eye: true

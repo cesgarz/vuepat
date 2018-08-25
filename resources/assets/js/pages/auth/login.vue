@@ -25,6 +25,7 @@
               :v-errors="errors"
               :form="form"
               :value.sync="form.password"
+              name="password"
               prepend="lock_outline"
               v-validate="'required|min:8'"
             ></password-input>
